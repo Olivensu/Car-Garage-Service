@@ -1,0 +1,22 @@
+.divider{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+
+.divider div{
+    width: 100%;
+    border: 1px solid #0D6EFD;
+    margin: 0 10px;
+}
+
+.divider p{
+    margin: 0 10px;
+}
+
+.google-icon{
+    width: 20px;
+    margin: 0 20px;
+}
