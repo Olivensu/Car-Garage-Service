@@ -1,30 +1,43 @@
 import React, { useRef, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Register = () => {
 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [agree, setAgree] = useState(false);
   const navigate = useNavigate()
   const [
     createUserWithEmailAndPassword,
     user,
     loading,
     error,
-  ] = useCreateUserWithEmailAndPassword(auth);
+  ] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification: true});
+  const [updateProfile, updating, Updateerror] = useUpdateProfile(auth);
   let errorElement;
   if(error){
     errorElement=( <div>
         <p className='text-danger'>Error: {error?.message}</p>
     </div>)
 }
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+if (loading || updating) {
+  return <div className='text-center m-5'>
+  
+  <Spinner animation="grow" variant="primary" />
+  <Spinner animation="grow" variant="secondary" />
+  <Spinner animation="grow" variant="success" />
+  <Spinner animation="grow" variant="danger" />
+  <Spinner animation="grow" variant="warning" />
+  <Spinner animation="grow" variant="info" />
+  <Spinner animation="grow" variant="light" />
+  <Spinner animation="grow" variant="dark" />
+</div>
+}
   if (user) {
     navigate('/home')
     return (
@@ -40,7 +53,7 @@ const Register = () => {
         <Form>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>
-            <Form.Control   type="text" name='name' placeholder="Enter Name" required />
+            <Form.Control  onChange={(e) => setName(e.target.value)}   type="text" name='name' placeholder="Enter Name" required />
             <Form.Text className="text-muted">
               We'll never share your Name with anyone else.
             </Form.Text>
@@ -58,14 +71,22 @@ const Register = () => {
             <Form.Control onChange={(e) => setPassword(e.target.value)} type="password"  placeholder="Password" required/>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
+            <Form.Check  onClick={()=>setAgree(!agree)}  type="checkbox" label="Accept All Terms & Conditions" />
           </Form.Group>
-          <Button  onClick={() => createUserWithEmailAndPassword(email, password)}  className="w-100" variant="primary" type="submit">
-            Login
+          <Button disabled = {!agree}  onClick={async(event) =>{
+             await createUserWithEmailAndPassword(email, password);
+             const success = await updateProfile({ name });
+             if (success) {
+               console.log('Updated profile');
+             }
+            } 
+          } className="w-100" variant="primary" type="submit">
+            Register
           </Button>
         </Form>
         {errorElement}
-        <p>Already Registered? <Link className="text-danger text-decoration-none" to='/Login'>Please Login</Link></p>
+        <p>Already Login? <Link className="text-primary text-decoration-none" to='/login'>Please Login</Link></p>
+        
         <SocialLogin></SocialLogin>
       </div>
     </div>

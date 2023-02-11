@@ -22,8 +22,8 @@ function App() {
         <Route path="/service/:serviceId" element={<ServiceDetails></ServiceDetails>}></Route>
         <Route path="/about" element={<About></About>}></Route>
         <Route path="/Services" element={<Services></Services>}></Route>
-        <Route path="/Login" element={<Login></Login>}></Route>
-        <Route path="/Register" element={<Register></Register>}></Route>
+        <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/register" element={<Register></Register>}></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>
         <Route path="/checkout" element={<RequiredAuth><CheckOut></CheckOut></RequiredAuth>}></Route>
       </Routes>

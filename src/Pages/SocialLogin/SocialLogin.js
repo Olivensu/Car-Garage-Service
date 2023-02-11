@@ -6,6 +6,7 @@ import github from '../../images/github-icon.png'
 import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useNavigate } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
@@ -17,6 +18,20 @@ const SocialLogin = () => {
             <p className='text-danger'>Error: {error?.message} {errorGit?.message}</p>
         </div>)
     }
+
+    if (loading || loadingGit) {
+        return <div className='text-center m-5'>
+        
+        <Spinner animation="grow" variant="primary" />
+        <Spinner animation="grow" variant="secondary" />
+        <Spinner animation="grow" variant="success" />
+        <Spinner animation="grow" variant="danger" />
+        <Spinner animation="grow" variant="warning" />
+        <Spinner animation="grow" variant="info" />
+        <Spinner animation="grow" variant="light" />
+        <Spinner animation="grow" variant="dark" />
+      </div>
+      }
 
     if(user || userGit){
         navigate('/home')
