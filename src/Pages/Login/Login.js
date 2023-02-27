@@ -8,6 +8,7 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 import { ToastContainer, toast } from 'react-toastify';
 
   import 'react-toastify/dist/ReactToastify.css';
+import PageTitle from "../Shared/PageTitle";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -57,6 +58,7 @@ const Login = () => {
      
   return (
     <div className="container w-50 mx-auto">
+      <PageTitle title='Login'></PageTitle>
       <h2 className="text-primary text-center">Please login</h2>
       <div>
         <Form>

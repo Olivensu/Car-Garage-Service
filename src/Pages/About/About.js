@@ -1,8 +1,11 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
+import PageTitle from "../Shared/PageTitle";
 
 const About = () => {
   return (
     <div className="text-center ">
+      <PageTitle title='About'></PageTitle>
       <h2 className="text-success">About us</h2>
       <p className="p-5 text-info">
         Car Garage Experts is a leading online platform that provides in-depth
